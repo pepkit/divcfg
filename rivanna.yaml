@@ -1,0 +1,15 @@
+# Environment configuration file for looper
+# This version describes the compute environment on Rivanna at UVA
+
+compute:
+  default:
+    submission_template: templates/slurm_template.sub
+    submission_command: sbatch
+    partition: parallel
+  econ:
+    submission_template: templates/slurm_template.sub
+    submission_command: sbatch
+    partition: economy
+  local:
+    submission_template: templates/localhost_template.sub
+    submission_command: sh
