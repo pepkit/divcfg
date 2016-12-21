@@ -7,9 +7,9 @@ compute:
     submission_command: sbatch
     partition: longq
   develop:
-  	submission_template: templates/slurm_template.sub
-  	submission_command: sbatch
-  	partition: develop
+    submission_template: templates/slurm_template.sub
+    submission_command: sbatch
+    partition: develop
   local:
-  	submission_template: templates/localhost_template.sub
-  	submission_command: sh
+    submission_template: templates/localhost_template.sub
+    submission_command: sh

@@ -1,5 +1,5 @@
 compute:
-  parallel:
+  default:
     submission_template: templates/slurm_template.sub
     submission_command: sbatch
     partition: parallel

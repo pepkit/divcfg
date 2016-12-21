@@ -13,3 +13,5 @@ compute:
   local:
     submission_template: templates/localhost_template.sub
     submission_command: sh
+
+pipelines: [$CODEBASE/pipelines, $CODEBASE/ATACseq, $CODEBASE/hichip_pipeline, $CODEBASE/open_pipelines]
