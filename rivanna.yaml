@@ -5,7 +5,7 @@ compute:
   default:
     submission_template: templates/slurm_template.sub
     submission_command: sbatch
-    partition: parallel
+    partition: serial
   econ:
     submission_template: templates/slurm_template.sub
     submission_command: sbatch
