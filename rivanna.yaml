@@ -10,6 +10,10 @@ compute:
     submission_template: templates/slurm_template.sub
     submission_command: sbatch
     partition: economy
+  largemem:
+    submission_template: templates/slurm_template.sub
+    submission_command: sbatch
+    partition: largemem
   local:
     submission_template: templates/localhost_template.sub
     submission_command: sh
