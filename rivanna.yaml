@@ -10,7 +10,7 @@ compute:
     submission_template: templates/slurm_template.sub
     submission_command: sbatch
     partition: economy
-  huge:
+  largemem:
     submission_template: templates/slurm_template.sub
     submission_command: sbatch
     partition: largemem
