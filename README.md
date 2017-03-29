@@ -6,18 +6,20 @@ To use Looper with a cluster resource manager (SGE, SLURM, etc.), you have to te
 2. Point an environment variable (LOOPERENV) to the config file (add this to your `.profile` or `.bashrc`).
 
 	```
-	export LOOPERENV=path/to/looper_env.yaml
+	export LOOPERENV=path/to/compute_config.yaml
 	```
 
-	For example:
+	In this repository are a few files that set up configuration at places where looper is in use:
+	 * rivanna.yaml : Supercomputer at University of Virginia
+	 * cemm.yaml: Cluster at the Center for Molecular Medicine, Vienna
+	 * nih.yaml: Biowulf2 cluster at the NIH
 
-	```
-	export LOOPERENV=${CODEBASE}looperenv/rivanna.yaml
-	```
 
-3. Edit the config file to match your environment (mostly, this means changing the `partition` variable to match the queue name you want to submit to).
+3. If the existing config files do not fit your environment, you will need to edit the config file to match your environment by following these instructions:
 
-For example, if you make your environment config file say:
+## Configuring a new environment
+
+Look at the examples files in this repository and customize for your compute environment. For example, if you make your environment config file say:
 
 ```
 compute:
@@ -37,17 +39,14 @@ Then your runs will all be submitted to SLURM using the partition called `longq`
 looper run --compute develop
 ```
 
-## Templates
-
-`looperenv` comes with some commonly used templates (in the [templates](/templates) folder):
-	- [slurm_template.sub](/templates/slurm_template.sub)
-	- [sge_template.sub](/templates/sge_template.sub)
-	- [localhost_template.sub](/tempaltes/localhost_template.sub)]
+**Templates**. `looperenv` comes with some commonly used templates (in the [templates](/templates) folder):
+	- SLURM: [slurm_template.sub](/templates/slurm_template.sub)
+	- SGE: [sge_template.sub](/templates/sge_template.sub)
+	- localhost (compute locally): [localhost_template.sub](/tempaltes/localhost_template.sub)]
 
 You can also add your own. Just follow these examples and point your `looperenv` config file to your custom template using the `submission_template` attribute.
 
-
-#### Template variables
+### Writing a new template
 
 The variables specified in these template files (like `{LOGFILE}` or `{CORES}`) are replaced by looper when it creates a job script. It populates the variables with information from a few different sources:
 
