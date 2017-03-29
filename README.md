@@ -10,16 +10,16 @@ To use Looper with a cluster resource manager (SGE, SLURM, etc.), you have to te
 	```
 
 	In this repository are a few files that set up configuration at places where looper is in use:
-	 * rivanna.yaml : Supercomputer at University of Virginia
-	 * cemm.yaml: Cluster at the Center for Molecular Medicine, Vienna
-	 * nih.yaml: Biowulf2 cluster at the NIH
+	 * `rivanna.yaml`: Supercomputer at University of Virginia
+	 * `cemm.yaml`: Cluster at the Center for Molecular Medicine, Vienna
+	 * `nih.yaml`: Biowulf2 cluster at the NIH
 
 
 3. If the existing config files do not fit your environment, you will need to edit the config file to match your environment by following these instructions:
 
 ## Configuring a new environment
 
-Look at the examples files in this repository and customize for your compute environment. For example, if you make your environment config file say:
+Look at the examples files in this repository (start with the default [compute_config.yaml](compute_config.yaml) and customize for your compute environment. Likely, the only thing you will need to change is the name of your submit partition. For example, if you make your environment config file say:
 
 ```
 compute:
