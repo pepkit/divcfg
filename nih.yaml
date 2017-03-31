@@ -4,11 +4,11 @@
 compute:
   default:
     submission_template: templates/slurm_template.sub
-    submission_command: sbatch
+    submission_command: sbatch --mail-type=BEGIN,TIME_LIMIT_90,END
     partition: norm
   norm:
     submission_template: templates/slurm_template.sub
-    submission_command: sbatch
+    submission_command: sbatch --mail-type=BEGIN,TIME_LIMIT_90,END
     partition: norm
   local:
     submission_template: templates/localhost_template.sub
