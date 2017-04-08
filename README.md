@@ -13,6 +13,7 @@ To use Looper with a cluster resource manager (SGE, SLURM, etc.), you have to te
 	 * `rivanna.yaml`: Supercomputer at University of Virginia
 	 * `cemm.yaml`: Cluster at the Center for Molecular Medicine, Vienna
 	 * `nih.yaml`: Biowulf2 cluster at the NIH
+	 * `stanford.yaml`: [Sherlock](http://sherlock.stanford.edu/mediawiki/index.php/Current_policies) cluster at Stanford
 
 
 3. If the existing config files do not fit your environment, you will need to edit the config file to match your environment by following these instructions:
