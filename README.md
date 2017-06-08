@@ -2,6 +2,8 @@
 
 To use Looper with a cluster resource manager (SGE, SLURM, etc.), you have to tell looper about a few settings, like queue name. This repository helps you set this up easily.
 
+## Setting up your environment
+
 1. Clone this repository
 2. Point an environment variable (LOOPERENV) to the config file (add this to your `.profile` or `.bashrc`).
 
@@ -9,18 +11,17 @@ To use Looper with a cluster resource manager (SGE, SLURM, etc.), you have to te
 	export LOOPERENV=path/to/compute_config.yaml
 	```
 
-	In this repository are a few files that set up configuration at places where looper is in use:
+	In this repository are a few files that set up configuration at places where looper is in use. Just point LOOPERENV to the appropriate one of these if there's a match:
 	 * `rivanna.yaml`: Supercomputer at University of Virginia
 	 * `cemm.yaml`: Cluster at the Center for Molecular Medicine, Vienna
 	 * `nih.yaml`: Biowulf2 cluster at the NIH
 	 * `stanford.yaml`: [Sherlock](http://sherlock.stanford.edu/mediawiki/index.php/Current_policies) cluster at Stanford
 
-
-3. If the existing config files do not fit your environment, you will need to edit the config file to match your environment by following these instructions:
+	 And that's it, you're done! If the existing config files do not fit your environment, you will need to edit the config file to match your environment by following these instructions:
 
 ## Configuring a new environment
 
-Look at the examples files in this repository (start with the default [compute_config.yaml](compute_config.yaml) and customize for your compute environment. Likely, the only thing you will need to change is the name of your submit partition. For example, if you make your environment config file say:
+Look at the examples files in this repository (start with the default [compute_config.yaml](compute_config.yaml) and customize for your compute environment. Likely, the only thing you will need to change is the `partition` variable, which should reflect your submission queue or partition name used by your cluster resource manager. For example, if you make your environment config file say:
 
 ```
 compute:
@@ -40,7 +41,9 @@ Then your runs will all be submitted to SLURM using the partition called `longq`
 looper run --compute develop
 ```
 
-**Templates**. `looperenv` comes with some commonly used templates (in the [templates](/templates) folder):
+## Understanding templates
+
+**Templates**. This `looperenv` repository comes with some commonly used templates (in the [templates](/templates) folder):
 	- SLURM: [slurm_template.sub](/templates/slurm_template.sub)
 	- SGE: [sge_template.sub](/templates/sge_template.sub)
 	- localhost (compute locally): [localhost_template.sub](/tempaltes/localhost_template.sub)]
@@ -49,7 +52,7 @@ You can also add your own. Just follow these examples and point your `looperenv`
 
 ### Writing a new template
 
-The variables specified in these template files (like `{LOGFILE}` or `{CORES}`) are replaced by looper when it creates a job script. It populates the variables with information from a few different sources:
+If none of the existing templates fit what you need, you can write your own! The variables specified in these template files (like `{LOGFILE}` or `{CORES}`) are replaced by looper when it creates a job script. It populates the variables with information from a few different sources:
 
 - {JOBNAME} -- automatically produced by looper using the `sample_name` and the pipeline name.
 - {LOGFILE} -- automatically produced by looper using the `sample_name` and the pipeline name.
