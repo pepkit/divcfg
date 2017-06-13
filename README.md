@@ -11,7 +11,7 @@ To use PEP project objects (or `looper`) with a cluster resource manager (SGE, S
 	export PEPENV=path/to/compute_config.yaml
 	```
 
-	In this repository are a few files that set up configuration at places where looper is in use. Just point LOOPERENV to the appropriate one of these if there's a match:
+	In this repository are a few files that set up configuration at places where looper is in use. Just point PEPENV to the appropriate one of these if there's a match:
 	 * `rivanna.yaml`: Supercomputer at University of Virginia
 	 * `cemm.yaml`: Cluster at the Center for Molecular Medicine, Vienna
 	 * `nih.yaml`: Biowulf2 cluster at the NIH
