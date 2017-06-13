@@ -1,14 +1,14 @@
-# Looper environment files
+# PEP environment files
 
 To use Looper with a cluster resource manager (SGE, SLURM, etc.), you have to tell looper about a few settings, like queue name. This repository helps you set this up easily.
 
 ## Setting up your environment
 
 1. Clone this repository
-2. Point an environment variable (LOOPERENV) to the config file (add this to your `.profile` or `.bashrc`).
+2. Point an environment variable (PEPENV) to the config file (add this to your `.profile` or `.bashrc`).
 
 	```
-	export LOOPERENV=path/to/compute_config.yaml
+	export PEPENV=path/to/compute_config.yaml
 	```
 
 	In this repository are a few files that set up configuration at places where looper is in use. Just point LOOPERENV to the appropriate one of these if there's a match:
@@ -43,12 +43,12 @@ looper run --compute develop
 
 ## Understanding templates
 
-**Templates**. This `looperenv` repository comes with some commonly used templates (in the [templates](/templates) folder):
+**Templates**. This `pepenv` repository comes with some commonly used templates (in the [templates](/templates) folder):
 	- SLURM: [slurm_template.sub](/templates/slurm_template.sub)
 	- SGE: [sge_template.sub](/templates/sge_template.sub)
 	- localhost (compute locally): [localhost_template.sub](/tempaltes/localhost_template.sub)]
 
-You can also add your own. Just follow these examples and point your `looperenv` config file to your custom template using the `submission_template` attribute.
+You can also add your own. Just follow these examples and point your `pepenv` config file to your custom template using the `submission_template` attribute.
 
 ### Writing a new template
 
@@ -59,6 +59,6 @@ If none of the existing templates fit what you need, you can write your own! The
 - {MEM} -- pulled from the `resources` section of the `pipeline_interface` file.
 - {CORES} -- pulled from the `resources` section of the `pipeline_interface` file.
 - {TIME} -- pulled from the `resources` section of the `pipeline_interface` file.
-- {PARTITION} -- pulled from the `compute` section of the `looperenv` file.
+- {PARTITION} -- pulled from the `compute` section of the `pepenv` file.
 
 You can create your own variables by defining them in the `pipeline_interface` and then you can use them in your `submit_template` file to configure things for your local environment.
