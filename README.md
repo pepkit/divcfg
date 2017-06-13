@@ -1,6 +1,6 @@
 # PEP environment files
 
-To use Looper with a cluster resource manager (SGE, SLURM, etc.), you have to tell looper about a few settings, like queue name. This repository helps you set this up easily.
+To use PEP project objects (or `looper`) with a cluster resource manager (SGE, SLURM, etc.), you have set a few settings, like queue name. This repository helps you set this up easily.
 
 ## Setting up your environment
 
