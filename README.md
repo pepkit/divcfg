@@ -56,9 +56,9 @@ If none of the existing templates fit what you need, you can write your own! The
 
 - {JOBNAME} -- automatically produced by looper using the `sample_name` and the pipeline name.
 - {LOGFILE} -- automatically produced by looper using the `sample_name` and the pipeline name.
-- {MEM} -- pulled from the `resources` section of the `pipeline_interface` file.
-- {CORES} -- pulled from the `resources` section of the `pipeline_interface` file.
-- {TIME} -- pulled from the `resources` section of the `pipeline_interface` file.
+- {MEM} -- pulled from the `resources` section of the [`pipeline_interface`](http://looper.readthedocs.io/en/latest/connecting-pipelines.html) file.
+- {CORES} -- pulled from the `resources` section of the [`pipeline_interface`](http://looper.readthedocs.io/en/latest/connecting-pipelines.html) file.
+- {TIME} -- pulled from the `resources` section of the [`pipeline_interface`](http://looper.readthedocs.io/en/latest/connecting-pipelines.html) file.
 - {PARTITION} -- pulled from the `compute` section of the `pepenv` file.
 
-You can create your own variables by defining them in the `pipeline_interface` and then you can use them in your `submit_template` file to configure things for your local environment.
+You can create your own variables by defining them in the `pipeline_interface` and then you can use them in your `submit_template` file to configure things for your local environment. [Read more about pipeline_interface.yaml here](http://looper.readthedocs.io/en/latest/connecting-pipelines.html).
