@@ -82,7 +82,7 @@ echo 'Start time:' `date +'%Y-%m-%d %T'`
 
 A template file uses variables (encoded like `{VARIABLE}`), which will be populated independently for each sample. The variables specified in these template files (like `{LOGFILE}` or `{CORES}`) are replaced by looper when it creates a job script. It populates the variables with information from a few different sources. Some of the variables are built-ins, and some are user-customizable:
 
-Build-in variables:
+Built-in variables:
 - `{CODE}` is a reserved variable that refers to the actual command string that will run the pipeline.
 - `{JOBNAME}` -- automatically produced by looper using the `sample_name` and the pipeline name.
 - `{LOGFILE}` -- automatically produced by looper using the `sample_name` and the pipeline name.
@@ -94,4 +94,8 @@ User-defined variables:
 - `{PARTITION}` -- pulled from the `compute` section of the `pepenv` file.
 
 You can also create your own templates, giving looper ultimate flexibility to work with any compute infrastructure in any environment; just follow these examples and point your `pepenv` config file to your custom template using the `submission_template` attribute. When you develop a pipeline or configure a pepenv, you can use any variables you like; these are just the defaults. You can create your own variables by defining them in the `pipeline_interface` and then you can use them in your `submit_template` file to configure things for your local environment. [Read more about pipeline_interface.yaml here](http://looper.readthedocs.io/en/latest/connecting-pipelines.html).
+
+### Advanced template variables
+
+What's actually happening behind the scene is that settings from your chosen compute and resource packages are combined, and then used to populate the template variables. You specify a pepenv "compute package" by what you pass on the command line to `--compute`. Then, the system automatically chooses a resources package (from `pipeline_interface`) based on file size of the input sample. The compute and resource packages are merged into a single object, which now has access to any variables defined at either level. Then, there's a third layer: anything specified in a `compute` section of `project_config` file is added last of all, which has then the highest precedence. This is used to populate any variables in your submission template. So, in theory, you can define these variables in any of these 3 places. The pipeline interface definition is loaded later, so it has precedence (that is, if you specify a variable in pipeline interface with the same name as one in the pepenv, the pipeline setting overrides the environment setting). 
 
