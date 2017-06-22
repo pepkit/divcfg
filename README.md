@@ -88,12 +88,12 @@ Built-in variables:
 - `{LOGFILE}` -- automatically produced by looper using the `sample_name` and the pipeline name.
 
 User-defined variables:
-- `{MEM}` -- pulled from the `resources` section of the [`pipeline_interface`](http://looper.readthedocs.io/en/latest/connecting-pipelines.html) file.
-- `{CORES}` -- pulled from the `resources` section of the [`pipeline_interface`](http://looper.readthedocs.io/en/latest/connecting-pipelines.html) file.
-- `{TIME}` -- pulled from the `resources` section of the [`pipeline_interface`](http://looper.readthedocs.io/en/latest/connecting-pipelines.html) file.
+- `{MEM}` -- pulled from the `resources` section of the [`pipeline_interface`](http://looper.readthedocs.io/en/latest/pipeline-interface.html) file.
+- `{CORES}` -- pulled from the `resources` section of the [`pipeline_interface`](http://looper.readthedocs.io/en/latest/pipeline-interface.html) file.
+- `{TIME}` -- pulled from the `resources` section of the [`pipeline_interface`](http://looper.readthedocs.io/en/latest/pipeline-interface.html) file.
 - `{PARTITION}` -- pulled from the `compute` section of the `pepenv` file.
 
-You can also create your own templates, giving looper ultimate flexibility to work with any compute infrastructure in any environment; just follow these examples and point your `pepenv` config file to your custom template using the `submission_template` attribute. When you develop a pipeline or configure a pepenv, you can use any variables you like; these are just the defaults. You can create your own variables by defining them in the `pipeline_interface` and then you can use them in your `submit_template` file to configure things for your local environment. [Read more about pipeline_interface.yaml here](http://looper.readthedocs.io/en/latest/connecting-pipelines.html).
+You can also create your own templates, giving looper ultimate flexibility to work with any compute infrastructure in any environment; just follow these examples and point your `pepenv` config file to your custom template using the `submission_template` attribute. When you develop a pipeline or configure a pepenv, you can use any variables you like; these are just the defaults. You can create your own variables by defining them in the `pipeline_interface` and then you can use them in your `submit_template` file to configure things for your local environment. [Read more about pipeline_interface.yaml here](http://looper.readthedocs.io/en/latest/pipeline-interface.html).
 
 ### Advanced template variables
 
