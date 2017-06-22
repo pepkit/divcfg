@@ -59,7 +59,7 @@ Most users will not need to tweak the template files. It will only be useful if 
 Each compute package specifies a path to a template file (`submission_template`). These paths can be relative or absolute; relative paths are considered *relative to the pepenv file*. This `pepenv` repository comes with some commonly used templates (in the [templates](/templates) folder):
 * SLURM: [slurm_template.sub](/templates/slurm_template.sub)
 * SGE: [sge_template.sub](/templates/sge_template.sub)
-* localhost (compute locally): [localhost_template.sub](/tempaltes/localhost_template.sub)]
+* localhost (compute locally): [localhost_template.sub](/tempaltes/localhost_template.sub)
 
 Here's an example of a generic SLURM template file:
 
