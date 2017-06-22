@@ -29,17 +29,17 @@ Look at the examples files in this repository (start with the default [compute_c
 ```
 compute:
   default:
-    submission_template: pipelines/templates/local_template.sub
+    submission_template: templates/local_template.sub
     submission_command: sh
   local:
-    submission_template: pipelines/templates/local_template.sub
+    submission_template: templates/local_template.sub
     submission_command: sh
   develop:
     submission_template: templates/slurm_template.sub
     submission_command: sbatch
     partition: develop
   big:
-    submission_template: pipelines/templates/slurm_template.sub
+    submission_template: templates/slurm_template.sub
     submission_command: sbatch
     partition: bigmem
   ```
@@ -54,24 +54,44 @@ Generically, you just use `looper run --compute PACKAGE`, and PACKAGE could be `
 
 ## Understanding templates
 
-Each compute package specifies a path to a file. These paths can be relative or absolute; relative paths are considered *relative to the pepenv file*. A template file uses variables (encoded like `{VARIABLE}`), which will be populated independently for each sample as defined in `pipeline_interface.yaml`. The one variable ``{CODE}`` is a reserved variable that refers to the actual command that will run the pipeline. Otherwise, you can use any variables you define in your `pipeline_interface.yaml`. You can also create your own templates, giving looper ultimate flexibility to work with any compute infrastructure in any environment.
+Most users will not need to tweak the template files. It will only be useful if you have particular computing environment needs and don't fit into these generic submission templates. If you find this is the case, please contribute your new templates back to this repository! These instructions should get you started on writing your own template:
 
-This `pepenv` repository comes with some commonly used templates (in the [templates](/templates) folder):
+Each compute package specifies a path to a template file (`submission_template`). These paths can be relative or absolute; relative paths are considered *relative to the pepenv file*. This `pepenv` repository comes with some commonly used templates (in the [templates](/templates) folder):
 * SLURM: [slurm_template.sub](/templates/slurm_template.sub)
 * SGE: [sge_template.sub](/templates/sge_template.sub)
 * localhost (compute locally): [localhost_template.sub](/tempaltes/localhost_template.sub)]
 
-You can also add your own. Just follow these examples and point your `pepenv` config file to your custom template using the `submission_template` attribute.
+Here's an example of a generic SLURM template file:
 
-### Writing a new template
+```{bash}
+#!/bin/bash
+#SBATCH --job-name='{JOBNAME}'
+#SBATCH --output='{LOGFILE}'
+#SBATCH --mem='{MEM}'
+#SBATCH --cpus-per-task='{CORES}'
+#SBATCH --time='{TIME}'
+#SBATCH --partition='{PARTITION}'
+#SBATCH -m block
+#SBATCH --ntasks=1
 
-If none of the existing templates fit what you need, you can write your own! The variables specified in these template files (like `{LOGFILE}` or `{CORES}`) are replaced by looper when it creates a job script. It populates the variables with information from a few different sources:
+echo 'Compute node:' `hostname`
+echo 'Start time:' `date +'%Y-%m-%d %T'`
 
-- {JOBNAME} -- automatically produced by looper using the `sample_name` and the pipeline name.
-- {LOGFILE} -- automatically produced by looper using the `sample_name` and the pipeline name.
-- {MEM} -- pulled from the `resources` section of the [`pipeline_interface`](http://looper.readthedocs.io/en/latest/connecting-pipelines.html) file.
-- {CORES} -- pulled from the `resources` section of the [`pipeline_interface`](http://looper.readthedocs.io/en/latest/connecting-pipelines.html) file.
-- {TIME} -- pulled from the `resources` section of the [`pipeline_interface`](http://looper.readthedocs.io/en/latest/connecting-pipelines.html) file.
-- {PARTITION} -- pulled from the `compute` section of the `pepenv` file.
+{CODE}
+```
 
-You can create your own variables by defining them in the `pipeline_interface` and then you can use them in your `submit_template` file to configure things for your local environment. [Read more about pipeline_interface.yaml here](http://looper.readthedocs.io/en/latest/connecting-pipelines.html).
+A template file uses variables (encoded like `{VARIABLE}`), which will be populated independently for each sample. The variables specified in these template files (like `{LOGFILE}` or `{CORES}`) are replaced by looper when it creates a job script. It populates the variables with information from a few different sources. Some of the variables are built-ins, and some are user-customizable:
+
+Build-in variables:
+- `{CODE}` is a reserved variable that refers to the actual command string that will run the pipeline.
+- `{JOBNAME}` -- automatically produced by looper using the `sample_name` and the pipeline name.
+- `{LOGFILE}` -- automatically produced by looper using the `sample_name` and the pipeline name.
+
+User-defined variables:
+- `{MEM}` -- pulled from the `resources` section of the [`pipeline_interface`](http://looper.readthedocs.io/en/latest/connecting-pipelines.html) file.
+- `{CORES}` -- pulled from the `resources` section of the [`pipeline_interface`](http://looper.readthedocs.io/en/latest/connecting-pipelines.html) file.
+- `{TIME}` -- pulled from the `resources` section of the [`pipeline_interface`](http://looper.readthedocs.io/en/latest/connecting-pipelines.html) file.
+- `{PARTITION}` -- pulled from the `compute` section of the `pepenv` file.
+
+You can also create your own templates, giving looper ultimate flexibility to work with any compute infrastructure in any environment; just follow these examples and point your `pepenv` config file to your custom template using the `submission_template` attribute. When you develop a pipeline or configure a pepenv, you can use any variables you like; these are just the defaults. You can create your own variables by defining them in the `pipeline_interface` and then you can use them in your `submit_template` file to configure things for your local environment. [Read more about pipeline_interface.yaml here](http://looper.readthedocs.io/en/latest/connecting-pipelines.html).
+
