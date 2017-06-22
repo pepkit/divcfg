@@ -5,7 +5,7 @@ To use PEP project objects (or `looper`) with a cluster resource manager (SGE, S
 ## Setting up your environment
 
 1. Clone this repository
-2. Point an environment variable (PEPENV) to the config file (add this to your `.profile` or `.bashrc`).
+2. Point an environment variable (PEPENV) to the appropriate config file in this respository (add this to your `.profile` or `.bashrc`).
 
 	```
 	export PEPENV=path/to/compute_config.yaml
@@ -22,32 +22,44 @@ To use PEP project objects (or `looper`) with a cluster resource manager (SGE, S
 
 ## Configuring a new environment
 
-Look at the examples files in this repository (start with the default [compute_config.yaml](compute_config.yaml) and customize for your compute environment. Likely, the only thing you will need to change is the `partition` variable, which should reflect your submission queue or partition name used by your cluster resource manager. For example, if you make your environment config file say:
+Look at the examples files in this repository (start with the default [compute_config.yaml](compute_config.yaml)) and customize for your compute environment. Likely, the only thing you will need to change is the `partition` variable, which should reflect your submission queue or partition name used by your cluster resource manager.
+
+## PEPENV configuration file and compute packages
 
 ```
 compute:
   default:
-    submission_template: templates/slurm_template.sub
-    submission_command: sbatch
-    partition: longq
+    submission_template: pipelines/templates/local_template.sub
+    submission_command: sh
+  local:
+    submission_template: pipelines/templates/local_template.sub
+    submission_command: sh
   develop:
     submission_template: templates/slurm_template.sub
     submission_command: sbatch
     partition: develop
+  big:
+    submission_template: pipelines/templates/slurm_template.sub
+    submission_command: sbatch
+    partition: bigmem
   ```
 
-Then your runs will all be submitted to SLURM using the partition called `longq` (the `default` setting). You can switch from the `long` partition to the `develop` partition __on the fly__ by specifying the `--compute` argument to `looper run` like so:
+The sub-sections below `compute` each define a *compute package* that can be activated. By default, the package named `default` will be used, which in this case is identical to the `local` package. You can make your default whatever you like. You can switch from local compute to the `develop` partition __on the fly__ by specifying the `--compute` argument to `looper run` like so:
 
 ```
 looper run --compute develop
 ```
 
+Generically, you just use `looper run --compute PACKAGE`, and PACKAGE could be `local` (which would do the same thing as the default, so doesn’t change anything), or `develop` or `big`, which would run the jobs on slurm, with queue `develop`, or `bigmem`. You can make as many compute packages as you wish.
+
 ## Understanding templates
 
-**Templates**. This `pepenv` repository comes with some commonly used templates (in the [templates](/templates) folder):
-	- SLURM: [slurm_template.sub](/templates/slurm_template.sub)
-	- SGE: [sge_template.sub](/templates/sge_template.sub)
-	- localhost (compute locally): [localhost_template.sub](/tempaltes/localhost_template.sub)]
+Each compute package specifies a path to a file. These paths can be relative or absolute; relative paths are considered *relative to the pepenv file*. A template file uses variables (encoded like `{VARIABLE}`), which will be populated independently for each sample as defined in `pipeline_interface.yaml`. The one variable ``{CODE}`` is a reserved variable that refers to the actual command that will run the pipeline. Otherwise, you can use any variables you define in your `pipeline_interface.yaml`. You can also create your own templates, giving looper ultimate flexibility to work with any compute infrastructure in any environment.
+
+This `pepenv` repository comes with some commonly used templates (in the [templates](/templates) folder):
+* SLURM: [slurm_template.sub](/templates/slurm_template.sub)
+* SGE: [sge_template.sub](/templates/sge_template.sub)
+* localhost (compute locally): [localhost_template.sub](/tempaltes/localhost_template.sub)]
 
 You can also add your own. Just follow these examples and point your `pepenv` config file to your custom template using the `submission_template` attribute.
 
