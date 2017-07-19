@@ -6,6 +6,10 @@ compute:
     submission_template: templates/slurm_template.sub
     submission_command: sbatch
     partition: serial
+  sigterm:
+    submission_template: templates/slurm_sig_template.sub
+    submission_command: sbatch
+    partition: serial
   econ:
     submission_template: templates/slurm_template.sub
     submission_command: sbatch
