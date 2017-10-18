@@ -5,15 +5,15 @@ compute:
   default:
     submission_template: templates/slurm_template.sub
     submission_command: sbatch
-    partition: serial
+    partition: parallel
   sigterm:
     submission_template: templates/slurm_sig_template.sub
     submission_command: sbatch
-    partition: serial
+    partition: parallel
   econ:
     submission_template: templates/slurm_template.sub
     submission_command: sbatch
-    partition: economy
+    partition: standard
   largemem:
     submission_template: templates/slurm_template.sub
     submission_command: sbatch
@@ -23,3 +23,4 @@ compute:
     submission_command: sh
 
 pipelines: [$CODEBASE/pipelines, $CODEBASE/ATACseq, $CODEBASE/hichip_pipeline, $CODEBASE/open_pipelines]
+
