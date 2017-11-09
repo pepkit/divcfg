@@ -5,15 +5,15 @@ compute:
   default:
     submission_template: templates/slurm_template.sub
     submission_command: sbatch
-    partition: parallel
+    partition: standard
   sigterm:
     submission_template: templates/slurm_sig_template.sub
     submission_command: sbatch
-    partition: parallel
-  econ:
+    partition: standard
+  parallel:
     submission_template: templates/slurm_template.sub
     submission_command: sbatch
-    partition: standard
+    partition: parallel
   largemem:
     submission_template: templates/slurm_template.sub
     submission_command: sbatch
