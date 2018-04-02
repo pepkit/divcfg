@@ -16,6 +16,7 @@ To use PEP project objects (or `looper`) with a cluster resource manager (SGE, S
 	 * `cemm.yaml`: Cluster at the Center for Molecular Medicine, Vienna
 	 * `nih_biowulf2.yaml`: [Biowulf2](https://hpc.nih.gov/docs/userguide.html) cluster at the NIH
 	 * `stanford_sherlock.yaml`: [Sherlock](http://sherlock.stanford.edu/mediawiki/index.php/Current_policies) cluster at Stanford
+	 * `ski-cer_lilac.yaml`: *lilac* cluster at Memorial Sloan Kettering
 	 * `compute_config.yaml`: Generic config file. Use this as a starting point to configure your own.
 
 	 And that's it, you're done! If the existing config files do not fit your environment, you will need to edit the config file to match your environment by following these instructions:
