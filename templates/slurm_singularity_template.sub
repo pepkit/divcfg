@@ -7,15 +7,11 @@
 #SBATCH --partition='{PARTITION}'
 #SBATCH -m block
 #SBATCH --ntasks=1
-#SBATCH --account='{ACCOUNT}'
 
 echo 'Compute node:' `hostname`
 echo 'Start time:' `date +'%Y-%m-%d %T'`
 
-singularity build pipeline {IMAGE_HOST}://{IMAGE}
+singularity instance.start {SINGULARITY_ARGS} {IMAGE} {JOBNAME}_image
+srun singularity exec instance://{JOBNAME}_image {CODE}
 
-singularity instance.start {SINGULARITY_ARGS} pipeline p_image
-
-srun singularity exec instance://p_image {CODE}
-
-singularity instance.stop p_image
+singularity instance.stop {JOBNAME}_image
