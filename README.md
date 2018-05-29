@@ -59,7 +59,17 @@ Generically, you just use `looper run --compute PACKAGE`, and PACKAGE could be `
 
 ## Using docker or singularity containers
 
-To run a command in a container, basically we just have to pass that command to some other command, like `docker run`, so using the `PEPENV` framework is a natural way to solve this problem. Take a look at the basic `localhost_container.yaml` configuration file:
+The `PEPENV` framework is a natural way to run commands in a container. All we need to do is 1) design a template that will run the job in the container, instead of natively; and 2) create a new compute package that will use that template. 
+
+This repository includes templates for the following scenarios:
+
+- singularity on SLURM: [localhost_singularity_template.sub](templates/localhost_singularity_template.sub)
+- singularity on localhost: [localhost_singularity_template.sub](templates/localhost_singularity_template.sub)
+- docker on localhost: [localhost_singularity_template.sub](templates/localhost_singularity_template.sub)
+
+If you need a different system, looking at those examples should get you started toward making your own.
+
+For the second thing, we'll need to create a container compute package. Take a look at the basic `localhost_container.yaml` configuration file:
 
 ```
 compute:

@@ -4,6 +4,6 @@ echo 'Compute node:' `hostname`
 echo 'Start time:' `date +'%Y-%m-%d %T'`
 
 {
-singularity instance.start {SINGULARITY_ARGS} {IMAGE} {JOBNAME}_image
+singularity instance.start {SINGULARITY_ARGS} {SINGULARITY_IMAGE} {JOBNAME}_image
 singularity exec instance://{JOBNAME}_image {CODE}
 } | tee {LOGFILE}
