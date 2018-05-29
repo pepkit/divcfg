@@ -1,31 +1,35 @@
 # PEP environment files
 
-To use PEP project objects (or `looper`) with a cluster resource manager (SGE, SLURM, etc.), you have set a few settings, like queue name. This repository helps you set this up easily.
+To use PEP project objects (or `looper`) with a cluster resource manager (SGE, SLURM, *etc.*) or with linux containers (`docker`, `singularity`, *etc.*), you have to provide a few configuration settings. We refer to this as the *computing environment configuration*. This repository provides templates to help you set up cluster computing, containerized computing, or both.
 
 ## Setting up your environment
 
+If you're lucky enough to be using a computing environment where `looper` is already deployed, set-up is very simple.
+
 1. Clone this repository
-2. Point an environment variable (PEPENV) to the appropriate config file in this respository (add this to your `.profile` or `.bashrc`).
+2. Point an environment variable (`$PEPENV`) to the appropriate config file in this repository (add this to your `.profile` or `.bashrc` if you want it to persist).
 
 	```
 	export PEPENV=path/to/compute_config.yaml
 	```
 
 	In this repository are a few files that set up configuration at places where looper is in use. Just point PEPENV to the appropriate one of these if there's a match:
-	 * `uva_rivanna.yaml`: [Rivanna cluster](http://arcs.virginia.edu/rivanna) at University of Virginia
-	 * `cemm.yaml`: Cluster at the Center for Molecular Medicine, Vienna
-	 * `nih_biowulf2.yaml`: [Biowulf2](https://hpc.nih.gov/docs/userguide.html) cluster at the NIH
-	 * `stanford_sherlock.yaml`: [Sherlock](http://sherlock.stanford.edu/mediawiki/index.php/Current_policies) cluster at Stanford
-	 * `ski-cer_lilac.yaml`: *lilac* cluster at Memorial Sloan Kettering
-	 * `compute_config.yaml`: Generic config file. Use this as a starting point to configure your own.
+   * `uva_rivanna.yaml`: [Rivanna cluster](http://arcs.virginia.edu/rivanna) at University of Virginia
+   * `cemm.yaml`: Cluster at the Center for Molecular Medicine, Vienna
+   * `nih_biowulf2.yaml`: [Biowulf2](https://hpc.nih.gov/docs/userguide.html) cluster at the NIH
+   * `stanford_sherlock.yaml`: [Sherlock](http://sherlock.stanford.edu/mediawiki/index.php/Current_policies) cluster at Stanford
+   * `ski-cer_lilac.yaml`: *lilac* cluster at Memorial Sloan Kettering
+   * `local_containers.yaml`: A generic local desktop or server (with no cluster management system) that will use docker or singularity containers.
 
-	 And that's it, you're done! If the existing config files do not fit your environment, you will need to edit the config file to match your environment by following these instructions:
+   And that's it, you're done! If the existing config files do not fit your environment, you will need to edit the config file to match your environment by following these instructions:
 
 ## Configuring a new environment
 
-Look at the examples files in this repository (start with the default [compute_config.yaml](compute_config.yaml)) and customize for your compute environment. Likely, the only thing you will need to change is the `partition` variable, which should reflect your submission queue or partition name used by your cluster resource manager.
+To start, just point at the default file, `compute_config.yaml`. This file is as a starting point to configure your own. Look at the contents of [compute_config.yaml](compute_config.yaml)) and customize for your compute environment. Likely, the only thing you will need to change is the `partition` variable, which should reflect your submission queue or partition name used by your cluster resource manager.
 
-## PEPENV configuration file and compute packages
+## PEPENV configuration file explained
+
+Consider an example environment configuration file:
 
 ```
 compute:
@@ -51,7 +55,38 @@ The sub-sections below `compute` each define a *compute package* that can be act
 looper run --compute develop
 ```
 
-Generically, you just use `looper run --compute PACKAGE`, and PACKAGE could be `local` (which would do the same thing as the default, so doesn’t change anything), or `develop` or `big`, which would run the jobs on slurm, with queue `develop`, or `bigmem`. You can make as many compute packages as you wish.
+Generically, you just use `looper run --compute PACKAGE`, and PACKAGE could be `local` (which in this case does the same thing as the default) or `develop` or `big`, which would run the jobs on slurm, with queue `develop`, or `bigmem`. You can make as many compute packages as you wish.
+
+## Using docker or singularity containers
+
+To run a command in a container, basically we just have to pass that command to some other command, like `docker run`, so using the `PEPENV` framework is a natural way to solve this problem. Take a look at the basic `localhost_container.yaml` configuration file:
+
+```
+compute:
+  default:
+    submission_template: templates/localhost_template.sub
+    submission_command: sh
+  singularity:
+    submission_template: templates/localhost_singularity_template.sub
+    submission_command: sh
+    singularity_args: -B /ext:/ext
+  docker:
+    submission_template: templates/localhost_docker_template.sub
+    submission_command: sh
+    docker_args: |
+      --user=$(id -u) \
+      --env="DISPLAY" \
+      $(env | cut -f1 -d= | sed 's/^/-e /') \
+      --volume ${HOME}:${HOME} \
+      --volume="/etc/group:/etc/group:ro" \
+      --volume="/etc/passwd:/etc/passwd:ro" \
+      --volume="/etc/shadow:/etc/shadow:ro"  \
+      --volume="/etc/sudoers.d:/etc/sudoers.d:ro" \
+      --volume="/tmp/.X11-unix:/tmp/.X11-unix:rw" \
+      --workdir="`pwd`" \
+```
+
+This should work out of the box for most users; if you want to run a singularity container, just specify `--compute singularity` and it will use the appropriate template (and likewise for `docker`). You will just need to make sure your `project_config.yaml` file contains a `compute.image` attribute pointing it to the image you want to use.
 
 ## Understanding templates
 
