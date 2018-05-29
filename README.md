@@ -96,7 +96,7 @@ compute:
       --workdir="`pwd`" \
 ```
 
-This should work out of the box for most users; if you want to run a singularity container, just specify `--compute singularity` and it will use the appropriate template (and likewise for `docker`). You will just need to make sure your `project_config.yaml` file contains a `compute.image` attribute pointing it to the image you want to use.
+This should work out of the box for most users; if you want to run a singularity container, just specify `--compute singularity` and it will use the appropriate template (and likewise for `docker`). You will just need to make sure your `pipeline_interface.yaml` file contains a `compute: singularity_image:` attribute pointing it to the image you want to use.
 
 ## Understanding templates
 
