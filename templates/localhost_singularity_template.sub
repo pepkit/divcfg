@@ -5,5 +5,5 @@ echo 'Start time:' `date +'%Y-%m-%d %T'`
 
 {
 singularity instance.start {SINGULARITY_ARGS} {IMAGE} {JOBNAME}_image
-srun singularity exec instance://{JOBNAME}_image {CODE}
+singularity exec instance://{JOBNAME}_image {CODE}
 } | tee {LOGFILE}
