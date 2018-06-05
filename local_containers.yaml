@@ -16,8 +16,9 @@ compute:
     docker_args: |
       --user=$(id -u) \
       --env="DISPLAY" \
-      $(env | cut -f1 -d= | sed 's/^/-e /') \
+      -e "GENOMES" \
       --volume ${HOME}:${HOME} \
+      --volume ${EXTDATA}:${EXTDATA} \
       --volume="/etc/group:/etc/group:ro" \
       --volume="/etc/passwd:/etc/passwd:ro" \
       --volume="/etc/shadow:/etc/shadow:ro"  \
