@@ -11,7 +11,7 @@ If you're lucky enough to be using a computing environment where `looper` is alr
 	```
 	export PEPENV=path/to/compute_config.yaml
 	```
- (Add this line to your `.profile` or `.bashrc` if you want it to persist).
+ 	(Add this line to your `.profile` or `.bashrc` if you want it to persist).
 
 	In this repository are a few files that set up configuration at places where looper is in use. Just point PEPENV to the appropriate one of these if there's a match:
    * `uva_rivanna.yaml`: [Rivanna cluster](http://arcs.virginia.edu/rivanna) at University of Virginia
