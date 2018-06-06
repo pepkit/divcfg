@@ -7,11 +7,11 @@ To use PEP project objects (or `looper`) with a cluster resource manager (SGE, S
 If you're lucky enough to be using a computing environment where `looper` is already deployed, set-up is very simple.
 
 1. Clone this repository
-2. Point an environment variable (`$PEPENV`) to the appropriate config file in this repository (add this to your `.profile` or `.bashrc` if you want it to persist).
-
+2. Point an environment variable (`$PEPENV`) to the appropriate config file in this repository by executing this command:
 	```
 	export PEPENV=path/to/compute_config.yaml
 	```
+ (Add this line to your `.profile` or `.bashrc` if you want it to persist).
 
 	In this repository are a few files that set up configuration at places where looper is in use. Just point PEPENV to the appropriate one of these if there's a match:
    * `uva_rivanna.yaml`: [Rivanna cluster](http://arcs.virginia.edu/rivanna) at University of Virginia
