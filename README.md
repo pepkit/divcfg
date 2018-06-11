@@ -169,11 +169,11 @@ To add a package for these templates to a `PEPENV` file, we just add a new secti
 singularity_slurm:
   submission_template: templates/slurm_singularity_template.sub
   submission_command: sbatch
-  singularity_args: -B /sfs/lustre:/sfs/lustre,/nm/t1:/nm/t1
+  singularity_args: --bind /sfs/lustre:/sfs/lustre,/nm/t1:/nm/t1
 singularity_local:
   submission_template: templates/localhost_singularity_template.sub
   submission_command: sh
-  singularity_args: -B /ext:/ext
+  singularity_args: --bind /ext:/ext
 ```
 
 These singularity compute packages look just like the typical ones, but just change the `submission_template` to point to the new containerized templates described in the previous section, and then they add the `singularity_args` variable, which is what will populate the `{SINGULARITY_ARGS}` variable in the template. Here we've used these to mount particular file systems the container will need. You can use these to pass along any environment-specific settings to your singularity container.
@@ -190,7 +190,7 @@ compute:
   singularity:
     submission_template: templates/localhost_singularity_template.sub
     submission_command: sh
-    singularity_args: -B /ext:/ext
+    singularity_args: --bind /ext:/ext
   docker:
     submission_template: templates/localhost_docker_template.sub
     submission_command: sh
