@@ -141,15 +141,46 @@ Now, this variable will be available for use in a template as `{SINGULARITY_IMAG
 
 The `PEPENV` framework is a natural way to run commands in a container. All we need to do is 1) design a template that will run the job in the container, instead of natively; and 2) create a new compute package that will use that template. 
 
+## 4.1 A template for container runs
+
 This repository includes templates for the following scenarios:
 
 - singularity on SLURM: [slurm_singularity_template.sub](templates/slurm_singularity_template.sub)
 - singularity on localhost: [localhost_singularity_template.sub](templates/localhost_singularity_template.sub)
 - docker on localhost: [localhost_singularity_template.sub](templates/localhost_singularity_template.sub)
 
-If you need a different system, looking at those examples should get you started toward making your own.
+If you need a different system, looking at those examples should get you started toward making your own. To take a quick example, using singularity on SLURM combines the basic SLURM script template with these lines to execute the run in container:
 
-To add a package for these templates to a `PEPENV` file, we just add a new section. Take a look at the basic `localhost_container.yaml` PEPENV file:
+```
+singularity instance.start {SINGULARITY_ARGS} {SINGULARITY_IMAGE} {JOBNAME}_image
+srun singularity exec instance://{JOBNAME}_image {CODE}
+singularity instance.stop {JOBNAME}_image
+```
+
+This template uses a few of the automatic variables defined earlier (`JOBNAME` and `CODE`) but adds two more: `{SINGULARITY_ARGS}` and `{SINGULARITY_IMAGE}`. For the *image*, this should point to a singularity image that could vary by pipeline, so it makes most sense to define this variable in the `pipeline_interface.yaml` file. So, any pipeline that provides a container should probably include a `compute: singularity_image:` attribute providing a place to point to the appropriate container image.
+
+The `{SINGULARITY_ARGS}` variable comes just right after the `instance.start` command, and can be used to pass any command-line arguments to singularity. We use these, for example, to bind host disk paths into the container. The [singularity documentation](https://singularity.lbl.gov/docs-mount#specifying-bind-paths) explains this, and you can find other arguments detailed there. Because this setting describes something about the computing environment (rather than an individual pipeline or sample), it makes most sense to put it in the `PEPENV` environment configuration file
+
+## 4.2 Adding compute packages for container runs.
+
+To add a package for these templates to a `PEPENV` file, we just add a new section. There are a few examples in this repository. A singularity example we use at UVA looks like this:
+
+```
+singularity_slurm:
+  submission_template: templates/slurm_singularity_template.sub
+  submission_command: sbatch
+  singularity_args: -B /sfs/lustre:/sfs/lustre,/nm/t1:/nm/t1
+singularity_local:
+  submission_template: templates/localhost_singularity_template.sub
+  submission_command: sh
+  singularity_args: -B /ext:/ext
+```
+
+These singularity compute packages look just like the typical ones, but just change the `submission_template` to point to the new containerized templates described in the previous section, and then they add the `singularity_args` variable, which is what will populate the `{SINGULARITY_ARGS}` variable in the template. Here we've used these to mount particular file systems the container will need. You can use these to pass along any environment-specific settings to your singularity container.
+
+With this setup, if you want to run a singularity container, just specify `--compute singularity_slurm` or `--compute singularity_local` and it will use the appropriate template. 
+
+For another example, take a look at the basic `localhost_container.yaml` PEPENV file, which describes a possible setup for running docker on a local computer:
 
 ```
 compute:
@@ -166,7 +197,6 @@ compute:
     docker_args: |
       --user=$(id -u) \
       --env="DISPLAY" \
-      $(env | cut -f1 -d= | sed 's/^/-e /') \
       --volume ${HOME}:${HOME} \
       --volume="/etc/group:/etc/group:ro" \
       --volume="/etc/passwd:/etc/passwd:ro" \
@@ -176,5 +206,4 @@ compute:
       --workdir="`pwd`" \
 ```
 
-This should work out of the box for most users; if you want to run a singularity container, just specify `--compute singularity` and it will use the appropriate template (and likewise for `docker`). You will just need to make sure your `pipeline_interface.yaml` file contains a `compute: singularity_image:` attribute pointing it to the image you want to use.
-
+This should work out of the box for most docker users.
