@@ -17,8 +17,8 @@ compute:
       --user=$(id -u) \
       --env="DISPLAY" \
       -e "GENOMES" \
-      --volume ${HOME}:${HOME} \
-      --volume ${EXTDATA}:${EXTDATA} \
+      --volume ${CODEBASE}:${CODEBASE} \
+      --volume ${PROCESSED}:${PROCESSED} \
       --volume="/etc/group:/etc/group:ro" \
       --volume="/etc/passwd:/etc/passwd:ro" \
       --volume="/etc/shadow:/etc/shadow:ro"  \
