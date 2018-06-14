@@ -97,14 +97,14 @@ echo 'Start time:' `date +'%Y-%m-%d %T'`
 srun {CODE}
 ```
 
-Template files use variables (encoded like `{VARIABLE}`), which will be populated independently for each sample. The variables specified in these template files (like `{LOGFILE}` or `{CORES}`) are replaced by looper when it creates a job script.
+Template files use variables (*e.g.* `{VARIABLE}`), which will be populated independently for each sample. The variables specified in these template files (like `{LOGFILE}` or `{CORES}`) are replaced by looper when it creates a job script.
 
 This `pepenv` repository comes with some commonly used templates (in the [templates](/templates) folder):
 * SLURM: [slurm_template.sub](/templates/slurm_template.sub)
 * SGE: [sge_template.sub](/templates/sge_template.sub)
 * localhost (compute locally): [localhost_template.sub](/tempaltes/localhost_template.sub)
 
-Most users will not need to tweak the template files. But, you can also create your own templates, giving looper ultimate flexibility to work with any compute infrastructure in any environment. To create a custom template, just look through the examples and build a new template file. Then, point your `pepenv` config file to your custom template using the `submission_template` attribute. If you make a useful template, please contribute your new templates back to this repository!
+Most users will not need to tweak the template files, but if you need to, you can also create your own templates, giving looper ultimate flexibility to work with any compute infrastructure in any environment. To create a custom template, just follow the examples and put together what you need. Then, point to your custom template in the `submission_template` attribute of a compute package in your `pepenv` config file. If you make a useful template, please contribute your new templates back to this repository!
 
 ### The source of the values
 
@@ -118,19 +118,16 @@ Built-in variables:
 
 Other variables are not automatically created by `looper` and are specified in a few different places:
 
-*PEPENV*. First, you have access to any variables specified in the `PEPENV` file for that compute package. The `{PARTITION}` variable is an example of this; that variable will be populated from the `partition` attribute for the compute package pulled from the `PEPENV` file.
+*PEPENV config file*. Variables that describes settings of a **compute environment** should go in the `PEPENV` file. Any attributes in the activated compute package will be available to populate template variables. For example, the `partition` attribute is specified in many of our default `PEPENV` files; that attribute is used to populate a template `{PARTITION}` variable. This is what enables pipelines to work in any compute environment, since we have no control over what your partitions are named. You can also use this to change SLURM queues on-the-fly.
 
-*pipeline_interface.yaml*. Variables that are specific to a pipeline can be defined in the pipeline interface file. These variables are pulled from two different sections: `compute` and `resources`. The difference between the two is that variables in the `compute` section are common to all samples, while variables in the `resources` section vary based on sample input size. As an example of a variable pulled from the `compute` section, we defined in our pipeline interface a variable pointing to the singularity or docker image that can be used to run the pipeline, like this:
+*pipeline_interface.yaml*. Variables that are **specific to a pipeline** can be defined in the `pipeline interface` file. Variables in two different sections are available to templates: the `compute` and `resources` sections. The difference between the two is that the `compute` section is common to all samples, while the `resources` section varies based on sample input size. As an example of a variable pulled from the `compute` section, we defined in our `pipeline_interface.yaml` a variable pointing to the singularity or docker image that can be used to run the pipeline, like this:
 
 ```
 compute:
   singularity_image: path/to/images/image
 ```
 
-Now, this variable will be available for use in a template as `{SINGULARITY_IMAGE}`. The other pipeline interface section is `resources`. Some examples of variables we use in the existing templates are these:
-- `{MEM}` -- pulled from the `resources` section of the [`pipeline_interface`](http://looper.readthedocs.io/en/latest/pipeline-interface.html) file.
-- `{CORES}` -- pulled from the `resources` section of the [`pipeline_interface`](http://looper.readthedocs.io/en/latest/pipeline-interface.html) file.
-- `{TIME}` -- pulled from the `resources` section of the [`pipeline_interface`](http://looper.readthedocs.io/en/latest/pipeline-interface.html) file.
+Now, this variable will be available for use in a template as `{SINGULARITY_IMAGE}`. This makes sense to put in the `compute` section because it doesn't change for differnet sizes of input files. The other pipeline interface section that is available to templates is `resources`. This section uses a list of *resource packages* that vary based on sample input size. We use these in existing templates to adjust the amount of resources we need to request from a resource manager like SLURM. For example: `{MEM}`, `{CORES}`, and `{TIME}` are all defined in this section, and they vary for different input file sizes.
 
 [Read more about pipeline_interface.yaml here](http://looper.readthedocs.io/en/latest/pipeline-interface.html).
 
