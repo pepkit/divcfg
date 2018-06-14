@@ -76,7 +76,7 @@ looper run --compute develop
 
 Generically, you just use `looper run --compute PACKAGE`, and PACKAGE could be `local` (which in this case does the same thing as the default) or `develop` or `big`, which would run the jobs on slurm, with queue `develop`, or `bigmem`. You can make as many compute packages as you wish, and name them whatever you wish. You can also add whatever attributes to the compute package. They should at least have `submission_template` and `submission_command`, but you can also add other variables which could populate parts of your templates. Each compute package specifies a path to a template file (`submission_template`). These paths can be relative or absolute; relative paths are considered *relative to the pepenv file*.
 
-## Templates files
+## Template files
 
 Template files are taken by looper, populated with sample-specific information, and then run as scripts. Here's an example of a generic SLURM template file:
 
@@ -94,7 +94,7 @@ Template files are taken by looper, populated with sample-specific information, 
 echo 'Compute node:' `hostname`
 echo 'Start time:' `date +'%Y-%m-%d %T'`
 
-{CODE}
+srun {CODE}
 ```
 
 Template files use variables (encoded like `{VARIABLE}`), which will be populated independently for each sample. The variables specified in these template files (like `{LOGFILE}` or `{CORES}`) are replaced by looper when it creates a job script.
