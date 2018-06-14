@@ -21,7 +21,7 @@ echo 'Compute node:' `hostname`
 echo 'Start time:' `date +'%Y-%m-%d %T'`
 
 # use & to run process in the background
-{CODE} &
+srun {CODE} &
 
 # capture process id for child process
 child=$!
