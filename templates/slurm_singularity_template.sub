@@ -7,13 +7,11 @@
 #SBATCH --partition='{PARTITION}'
 #SBATCH -m block
 #SBATCH --ntasks=1
-#SBATCH --open-mode=append
 
 echo 'Compute node:' `hostname`
 echo 'Start time:' `date +'%Y-%m-%d %T'`
 
-cmd="{CODE}"
+singularity instance.start {SINGULARITY_ARGS} {SINGULARITY_IMAGE} {JOBNAME}_image
+srun singularity exec instance://{JOBNAME}_image {CODE}
 
-y=`echo "$cmd" | sed -e 's/^/srun /'`
-eval "$y"
-
+singularity instance.stop {JOBNAME}_image
