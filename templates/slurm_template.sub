@@ -11,4 +11,8 @@
 echo 'Compute node:' `hostname`
 echo 'Start time:' `date +'%Y-%m-%d %T'`
 
-srun {CODE}
+cmd="{CODE}"
+
+y=`echo "$cmd" | sed -e 's/^/srun /'`
+eval "$y"
+
