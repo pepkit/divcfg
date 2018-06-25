@@ -37,7 +37,7 @@ To configure a new environment, we'll follow the same steps, but just point at t
   ```
   (Add this line to your `.profile` or `.bashrc` if you want it to persist).
 
-3. Next, use this file as a starting point to configure your environment. Likely, the only thing you will need to change is the `partition` variable, which should reflect your submission queue or partition name used by your cluster resource manager.
+3. Next, use this file as a starting point to configure your environment. If you're using SLURM and you're lucky, the only thing you will need to change is the `partition` variable, which should reflect your submission queue or partition name used by your cluster resource manager. To make more advanced changes, the documentation below will guide you through all components of the configuration.
 
 4. Once you have it working, consider submitting your configuration file back to this repository with a pull request.
 
