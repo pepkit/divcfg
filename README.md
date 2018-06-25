@@ -1,12 +1,12 @@
 # 1. Overview of PEP environment configuration
 
-To use PEP project objects (or `looper`) with a cluster resource manager (SGE, SLURM, *etc.*) or with linux containers (`docker`, `singularity`, *etc.*), you have to provide a few configuration settings. We refer to this as the *computing environment configuration*. This repository provides templates to help you set up cluster computing, containerized computing, or both.
+PEPENV is a repository that contains configuration files that describe computing environments. We refer to this as a *computing environment configuration*. Its primary use is to configure different computing options for the [looper](http://looper.readthedocs.io)] pipeline submission engine. PEPENV enables `looper` to use cluster resource manager (SGE, SLURM, *etc.*) or with linux containers (`docker`, `singularity`, *etc.*). This repository provides templates to help you set up cluster computing, containerized computing, or both.
 
 # 2. Setting up your environment
 
 ## Plugging into a compute environment where PEPENV is already deployed
 
-For server environments where `looper` is being actively used, this repository already contains the correct configuration settings. If you're lucky enough to be at one of these places, set-up is very simple. Here's a list of pre-configured computing environments:
+For server environments where `looper` is being actively used, this repository already contains plug-and-play configuration files. If you're lucky enough to be at one of these places, set-up is very simple. Here's a list of pre-configured computing environments:
 
    * `uva_rivanna.yaml`: [Rivanna cluster](http://arcs.virginia.edu/rivanna) at University of Virginia
    * `cemm.yaml`: Cluster at the Center for Molecular Medicine, Vienna
