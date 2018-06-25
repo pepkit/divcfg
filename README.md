@@ -113,7 +113,7 @@ Most users will not need to tweak the template files, but if you need to, you ca
 What is the source of values used to populate the variables? Well, they are pooled together from several sources. To start, there are a few built-ins:
 
 Built-in variables:
-- `{CODE}` is a reserved variable that refers to the actual command string that will run the pipeline.
+- `{CODE}` is a reserved variable that refers to the actual command string that will run the pipeline. Looper will piece together this command individually for each sample
 - `{JOBNAME}` -- automatically produced by looper using the `sample_name` and the pipeline name.
 - `{LOGFILE}` -- automatically produced by looper using the `sample_name` and the pipeline name.
 
@@ -129,11 +129,11 @@ compute:
   singularity_image: path/to/images/image
 ```
 
-Now, this variable will be available for use in a template as `{SINGULARITY_IMAGE}`. This makes sense to put in the `compute` section because it doesn't change for differnet sizes of input files. The other pipeline interface section that is available to templates is `resources`. This section uses a list of *resource packages* that vary based on sample input size. We use these in existing templates to adjust the amount of resources we need to request from a resource manager like SLURM. For example: `{MEM}`, `{CORES}`, and `{TIME}` are all defined in this section, and they vary for different input file sizes.
+Now, this variable will be available for use in a template as `{SINGULARITY_IMAGE}`. This makes sense to put in the `compute` section because it doesn't change for different sizes of input files. The other pipeline interface section that is available to templates is `resources`. This section uses a list of *resource packages* that vary based on sample input size. We use these in existing templates to adjust the amount of resources we need to request from a resource manager like SLURM. For example: `{MEM}`, `{CORES}`, and `{TIME}` are all defined in this section, and they vary for different input file sizes.
 
 [Read more about pipeline_interface.yaml here](http://looper.readthedocs.io/en/latest/pipeline-interface.html).
 
-*project_config.yaml*. Finally, project-level variables can also be populated from the `compute` section of a project config file.
+*project_config.yaml*. Finally, project-level variables can also be populated from the `compute` section of a project config file. We don't recommend using this and it is not yet well documented, but it would enable you to make project-specific compute changes (such as billing a particular project to a particular SLURM resource account).
 
 
 # 4. Using docker or singularity containers
