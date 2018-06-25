@@ -58,7 +58,7 @@ compute:
   local:
     submission_template: templates/local_template.sub
     submission_command: sh
-  develop:
+  develop_package:
     submission_template: templates/slurm_template.sub
     submission_command: sbatch
     partition: develop
@@ -68,13 +68,15 @@ compute:
     partition: bigmem
   ```
 
-The sub-sections below `compute` each define a *compute package* that can be activated. By default, the package named `default` will be used, which in this case is identical to the `local` package. You can make your default whatever you like. You can switch from local compute to the `develop` partition __on the fly__ by specifying the `--compute` argument to `looper run` like so:
+The sub-sections below `compute` each define a *compute package* that can be activated. Looper uses these compute packages to determine how to submit your jobs. By default, looper uses the package named `default`. You can make your default whatever you like. You can instruct looper to use any other compute package __on the fly__ by specifying the `--compute` argument to `looper run` like so:
 
 ```
-looper run --compute develop
+looper run --compute PACKAGE
 ```
 
-Generically, you just use `looper run --compute PACKAGE`, and PACKAGE could be `local` (which in this case does the same thing as the default) or `develop` or `big`, which would run the jobs on slurm, with queue `develop`, or `bigmem`. You can make as many compute packages as you wish, and name them whatever you wish. You can also add whatever attributes to the compute package. They should at least have `submission_template` and `submission_command`, but you can also add other variables which could populate parts of your templates. Each compute package specifies a path to a template file (`submission_template`). These paths can be relative or absolute; relative paths are considered *relative to the pepenv file*.
+For example, to use the `develop` partition, you would use  `looper run --compute develop_package`; to use the `bibmem` partition, use `--compute big`. You can make as many compute packages as you wish, and name them whatever you wish. You can also add whatever attributes to the compute package. They should at least have `submission_template` and `submission_command`, but you can also add other variables which could populate parts of your templates. Each compute package specifies a path to a template file (`submission_template`). These paths can be relative or absolute; relative paths are considered *relative to the pepenv file*.
+
+The `submission_command` attribute is the string your cluster resource manager uses to submit a job. In this example, we're using the SLURM command `sbatch`. Looper will run our jobs as: `sbatch submission_script.txt`. This flexibility is what enables looper to work with any cluster resource manager.
 
 ## Template files
 
