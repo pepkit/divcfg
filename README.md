@@ -80,7 +80,7 @@ The `submission_command` attribute is the string your cluster resource manager u
 
 ## Template files
 
-Template files are taken by looper, populated with sample-specific information, and then run as scripts. Here's an example of a generic SLURM template file:
+Each compute package must point to a template file. These template files are typically stored relative to the PEPENV config file. Template files are taken by looper, populated with sample-specific information, and then run as scripts. Here's an example of a generic SLURM template file:
 
 ```{bash}
 #!/bin/bash
