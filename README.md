@@ -160,7 +160,7 @@ This template uses a few of the automatic variables defined earlier (`JOBNAME` a
 
 Of course, you will also need to make sure that you have access to `singularity` command from the compute nodes; on some clusters, you may need to add a `module load singularity` (or some variation) to enable it.
 
-The `{SINGULARITY_ARGS}` variable comes just right after the `instance.start` command, and can be used to pass any command-line arguments to singularity. We use these, for example, to bind host disk paths into the container. The [singularity documentation](https://singularity.lbl.gov/docs-mount#specifying-bind-paths) explains this, and you can find other arguments detailed there. Because this setting describes something about the computing environment (rather than an individual pipeline or sample), it makes most sense to put it in the `PEPENV` environment configuration file. The next section includes examples of how to use `singularity_args`.
+The `{SINGULARITY_ARGS}` variable comes just right after the `instance.start` command, and can be used to pass any command-line arguments to singularity. We use these, for example, to bind host disk paths into the container. **It is critical that you explicitly bind any file systems with data necessary for the pipeline so the running container can see those files**. The [singularity documentation](https://singularity.lbl.gov/docs-mount#specifying-bind-paths) explains this, and you can find other arguments detailed there. Because this setting describes something about the computing environment (rather than an individual pipeline or sample), it makes most sense to put it in the `PEPENV` environment configuration file. The next section includes examples of how to use `singularity_args`.
 
 ## 4.2 Adding compute packages for container runs.
 
@@ -177,7 +177,7 @@ singularity_local:
   singularity_args: --bind /ext:/ext
 ```
 
-These singularity compute packages look just like the typical ones, but just change the `submission_template` to point to the new containerized templates described in the previous section, and then they add the `singularity_args` variable, which is what will populate the `{SINGULARITY_ARGS}` variable in the template. Here we've used these to mount particular file systems the container will need. You can use these to pass along any environment-specific settings to your singularity container.
+These singularity compute packages look just like the typical ones, but just change the `submission_template` to point to the new containerized templates described in the previous section, and then they add the `singularity_args` variable, which is what will populate the `{SINGULARITY_ARGS}` variable in the template. Here we've used these to bind (mount) particular file systems the container will need. You can use these to pass along any environment-specific settings to your singularity container.
 
 With this setup, if you want to run a singularity container, just specify `--compute singularity_slurm` or `--compute singularity_local` and it will use the appropriate template. 
 
@@ -207,4 +207,4 @@ compute:
       --workdir="`pwd`" \
 ```
 
-This should work out of the box for most docker users.
+Notice the `--volume` arguments, which mount disk volumes from the host into the container. This should work out of the box for most docker users.
