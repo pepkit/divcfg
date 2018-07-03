@@ -138,7 +138,7 @@ Now, this variable will be available for use in a template as `{SINGULARITY_IMAG
 
 # 4. Using docker or singularity containers
 
-The `PEPENV` framework is a natural way to run commands in a container. All we need to do is 1) design a template that will run the job in the container, instead of natively; and 2) create a new compute package that will use that template. 
+The `PEPENV` framework is a natural way to run commands in a container. All we need to do is 1) design a template that will run the job in the container, instead of natively; and 2) create a new compute package that will use that template. **To use containers with looper requires `looper`version >= 0.9**.
 
 ## 4.1 A template for container runs
 
