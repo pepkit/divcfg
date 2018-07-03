@@ -126,10 +126,12 @@ Other variables are not automatically created by `looper` and are specified in a
 
 ```
 compute:
-  singularity_image: path/to/images/image
+  singularity_image: /absolute/path/to/images/image
 ```
 
-Now, this variable will be available for use in a template as `{SINGULARITY_IMAGE}`. This makes sense to put in the `compute` section because it doesn't change for different sizes of input files. The other pipeline interface section that is available to templates is `resources`. This section uses a list of *resource packages* that vary based on sample input size. We use these in existing templates to adjust the amount of resources we need to request from a resource manager like SLURM. For example: `{MEM}`, `{CORES}`, and `{TIME}` are all defined in this section, and they vary for different input file sizes.
+Now, this variable will be available for use in a template as `{SINGULARITY_IMAGE}`. This makes sense to put in the `compute` section because it doesn't change for different sizes of input files. This path should probably be absolute, because a relatively path will be interpreted as relative to the working directory wherever you job is executed.
+
+The other pipeline interface section that is available to templates is `resources`. This section uses a list of *resource packages* that vary based on sample input size. We use these in existing templates to adjust the amount of resources we need to request from a resource manager like SLURM. For example: `{MEM}`, `{CORES}`, and `{TIME}` are all defined in this section, and they vary for different input file sizes.
 
 [Read more about pipeline_interface.yaml here](http://looper.readthedocs.io/en/latest/pipeline-interface.html).
 
