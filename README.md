@@ -1,6 +1,6 @@
 # 1. Overview of PEP environment configuration
 
-PEPENV is a repository that contains configuration files that describe computing environments. We refer to this as a *computing environment configuration*. Its primary use is to configure different computing options for the [looper](http://looper.readthedocs.io)] pipeline submission engine. PEPENV enables `looper` to use cluster resource manager (SGE, SLURM, *etc.*) or with linux containers (`docker`, `singularity`, *etc.*). This repository provides templates to help you set up cluster computing, containerized computing, or both.
+PEPENV is a repository that contains configuration files that describe computing environments. We refer to this as a *computing environment configuration*. Its primary use is to configure different computing options for the [looper](http://looper.readthedocs.io) pipeline submission engine. PEPENV enables `looper` to use cluster resource manager (SGE, SLURM, *etc.*) or with linux containers (`docker`, `singularity`, *etc.*). This repository provides templates to help you set up cluster computing, containerized computing, or both.
 
 # 2. Setting up your environment
 
