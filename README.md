@@ -1,12 +1,12 @@
-# 1. Overview of `divvy` computing configuration
+# 1. Overview of `divvy` configuration files
 
-The `DIVCFG` repository contains [divvy](http://code.databio.org/divvy/) computing configuration files currently in use in a variety of research computing environments. These files describe computing environments so that any tool that uses `divvy` can run jobs on any computing environment. `Divvy` enables any tool to seamlessly switch between cluster resource managers (SGE, SLURM, *etc.*), linux containers (`docker`, `singularity`, *etc.*), or other computing environments. These files can be used as examples to help you set up cluster computing, containerized computing, in your own computing environment.
+The `divcfg` repository contains [divvy](http://code.databio.org/divvy/) computing configuration files currently in use across several research computing environments (Stanford, NIH, UVA, CeMM, and Memorial Sloan-Kettering). These files describe computing environments so that any tool that uses `divvy` can run jobs in these environments. These files can be used as examples to help you set up cluster or containerized computing in your own environment.
 
 # 2. Setting up your environment
 
-## Plugging into a compute environment where `divvy` is already deployed
+## Using `divvy` in pre-configured environments
 
-For some server environments, this repository already contains plug-and-play configuration files. If you're lucky enough to be at one of these places, set-up is very simple. Here's a list of pre-configured computing environments:
+If you're at one of the following places, set-up is very simple. Here's a list of pre-configured computing environments:
 
    * `uva_rivanna.yaml`: [Rivanna cluster](http://arcs.virginia.edu/rivanna) at University of Virginia
    * `cemm.yaml`: Cluster at the Center for Molecular Medicine, Vienna
@@ -15,7 +15,7 @@ For some server environments, this repository already contains plug-and-play con
    * `ski-cer_lilac.yaml`: *lilac* cluster at Memorial Sloan Kettering
    * `local_containers.yaml`: A generic local desktop or server (with no cluster management system) that will use docker or singularity containers.
 
-To set up your looper to use cluster resources at one of these locations, all you have to do is:
+To configure `divvy` to use one of these, all you have to do is:
 
 1. Clone this repository
 2. Point the `$DIVCFG` environment variable to the appropriate config file by executing this command:
@@ -44,5 +44,8 @@ To configure a new environment, we'll follow the same steps, but just point at t
 
 # 3. DIVCFG configuration explained
 
-You can find detailed instructions for how to write your own divvy configuration file at [http://code.databio.org/divvy/configuration/](http://code.databio.org/divvy/configuration/).
+You can find detailed instructions for [how to write your own divvy configuration file](http://divvy.databio.org/en/latest/configuration/).
 
+# What is divvy?
+
+`Divvy` enables any tool to seamlessly switch between cluster resource managers (SGE, SLURM, *etc.*), linux containers (`docker`, `singularity`, *etc.*), or other computing environments.
