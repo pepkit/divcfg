@@ -24,7 +24,11 @@ To configure `divvy` to use one of these, all you have to do is:
 	```
  	(Add this line to your `.profile` or `.bashrc` if you want it to persist).
 
-And that's it, you're done! If the existing config files do not fit your environment, you will need to create a `divvy` config file to match your environment by following these instructions:
+3. Install divvy (*e.g.* `pip install --user --upgrade divvy`)
+
+And that's it, you're done! You can run `divvy list` on the command line to show you available compute packages.
+
+If the existing config files do not fit your environment, you will need to create a `divvy` config file to match your environment by following these instructions:
 
 ## Configuring a new environment
 
