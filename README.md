@@ -17,7 +17,7 @@ If you're at one of the following places, set-up is very simple. Here's a list o
 
 To configure `divvy` to use one of these, all you have to do is:
 
-1. Clone this repository
+1. Clone this repository (*e.g.* `git clone https://github.com/pepkit/divcfg.git`)
 2. Point the `$DIVCFG` environment variable to the appropriate config file by executing this command:
 	```
 	export DIVCFG=path/to/compute_config.yaml
