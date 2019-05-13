@@ -34,7 +34,7 @@ If the existing config files do not fit your environment, you will need to creat
 
 To configure a new environment, we'll follow the same steps, but just point at the default file, `compute_config.yaml`, which we will then edit to match your local computing environment.
 
-1. Clone this repository
+1. Clone this repository  (*e.g.* `git clone https://github.com/pepkit/divcfg.git`)
 2. Point the `$DIVCFG` environment variable to the **default config file** by executing this command:
   ```
   export DIVCFG=path/to/compute_config.yaml
