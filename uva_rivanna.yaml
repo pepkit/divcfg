@@ -29,6 +29,13 @@ compute_packages:
     submission_template: templates/localhost_singularity_template.sub
     submission_command: sh
     singularity_args: -B /ext:/ext
+  bulker_slurm:
+    submission_template: templates/slurm_bulker_template.sub
+    submission_command: sbatch
+  bulker_local:
+    submission_template: templates/localhost_bulker_template.sub
+    submission_command: sh
+  
 
 # old idea:
 # pipelines: [$CODEBASE/pipelines, $CODEBASE/ATACseq, $CODEBASE/hichip_pipeline, $CODEBASE/open_pipelines]
