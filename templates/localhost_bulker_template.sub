@@ -4,5 +4,5 @@ echo 'Compute node:' `hostname`
 echo 'Start time:' `date +'%Y-%m-%d %T'`
 
 {
-bulker run {BULKER_CRATE} {CODE}
+bulker run {BULKER_CRATE} '{CODE}'
 } | tee {LOGFILE} --ignore-interrupts
