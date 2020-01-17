@@ -24,7 +24,7 @@ compute_packages:
   singularity_slurm:
     submission_template: templates/slurm_singularity_template.sub
     submission_command: sbatch
-    singularity_args: -B /sfs/lustre:/sfs/lustre
+    singularity_args: -B /sfs/lustre:/sfs/lustre,/nm/t1:/nm/t1
   singularity_local:
     submission_template: templates/localhost_singularity_template.sub
     submission_command: sh
