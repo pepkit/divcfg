@@ -14,6 +14,6 @@ echo 'Start time:' `date +'%Y-%m-%d %T'`
 
 cmd="{CODE}"
 
-y=`echo "$cmd" | sed -e 's/^/srun bulker run {BULKER_CRATE} /'`
+y=`echo "$cmd" | sed -e 's$^$srun bulker run {BULKER_CRATE} $'`
 eval "$y"
 
