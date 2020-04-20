@@ -12,8 +12,8 @@
 echo 'Compute node:' `hostname`
 echo 'Start time:' `date +'%Y-%m-%d %T'`
 
-cmd="bulker run {BULKER_CRATE} '{CODE}'"
+cmd="{CODE}"
 
-y=`echo "$cmd" | sed -e 's/^/srun /'`
+y=`echo "$cmd" | sed -e 's/^/srun bulker run {BULKER_CRATE} /'`
 eval "$y"
 
