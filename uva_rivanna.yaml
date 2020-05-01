@@ -7,6 +7,7 @@ adapters:
   LOGFILE: looper.log_file
   TIME: compute.time
   MEM: compute.mem
+  BULKER_CRATE: compute.bulker_crate
   DOCKER_ARGS: compute.docker_args
   DOCKER_IMAGE: compute.docker_image
   SINGULARITY_IMAGE: compute.singularity_image
