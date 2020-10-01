@@ -31,21 +31,21 @@ compute_packages:
     partition: largemem
   local:
     submission_template: templates/localhost_template.sub
-    submission_command: sh
+    submission_command: .
   singularity_slurm:
     submission_template: templates/slurm_singularity_template.sub
     submission_command: sbatch
     singularity_args: -B /sfs/lustre:/sfs/lustre,/nm/t1:/nm/t1
   singularity_local:
     submission_template: templates/localhost_singularity_template.sub
-    submission_command: sh
+    submission_command: .
     singularity_args: -B /apps:/apps
   bulker_slurm:
     submission_template: templates/slurm_bulker_template.sub
     submission_command: sbatch
   bulker_local:
     submission_template: templates/localhost_bulker_template.sub
-    submission_command: sh
+    submission_command: . 
   
 # old idea:
 # pipelines: [$CODEBASE/pipelines, $CODEBASE/ATACseq, $CODEBASE/hichip_pipeline, $CODEBASE/open_pipelines]
